@@ -36,7 +36,7 @@ This card allows to open, close or set a shutter to the opening rate you want.
 | disable_end_buttons | boolean | False | `false` | If set to `true`, the end states (opened/closed) will also deactivate the buttons for that direction (i.e. the "up" button will be disabled when the shutters are fully open)
 | text_opened | string | False | - | Custom text for state opened
 | text_closed | string | False | - | Custom text for state closed
-| text_no_position | string | False | - | Custom text for state closed
+| text_no_position | string | False | - | Custom text for no state
 _Remark : you can also just give the entity ID (without to specify `entity:`) if you don't need to specify the other configurations._
 
 ### Sample
