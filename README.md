@@ -49,9 +49,9 @@ entities:
     name: Left shutter
     buttons_position: left
     title_position: bottom
-	text_opened: open
-	text_closed: close
-	text_no_position: no position 
+    text_opened: open
+    text_closed: close
+    text_no_position: no position 
   - cover.bedroom_shutter
 ```
 
