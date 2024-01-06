@@ -10,7 +10,7 @@ class ShutterCard extends HTMLElement {
       if (this.config.title) {
           card.header = this.config.title;
       }
-    
+
       this.card = card;
       this.appendChild(card);
     
@@ -60,6 +60,21 @@ class ShutterCard extends HTMLElement {
         let width = 153;
         if (entity && entity.shutter_width_px) {
           width = Math.max(10,entity.shutter_width_px); // make sure this is valid range
+        }
+		
+		let text_opened = "";
+        if (entity && entity.text_opened) {
+          text_opened = entity.text_opened;
+        }
+		
+		let text_closed = "";
+        if (entity && entity.text_closed) {
+          text_closed = entity.text_closed;
+        }
+		
+		let text_no_position = "";
+        if (entity && entity.text_no_position) {
+          text_no_position = entity.text_no_position;
         }
           
         let shutter = document.createElement('div');
@@ -299,7 +314,10 @@ class ShutterCard extends HTMLElement {
       const friendlyName = (entity && entity.name) ? entity.name : state ? state.attributes.friendly_name : 'unknown';
       const currentPosition = state ? state.attributes.current_position : 'unknown';
       const movementState = state? state.state : 'unknown';
-      
+      const text_opened = (entity && entity.text_opened) ? entity.text_opened : '';
+	  const text_closed = (entity && entity.text_closed) ? entity.text_closed : '';
+	  const text_no_position = (entity && entity.text_no_position) ? entity.text_no_position : '';
+	  
       shutter.querySelectorAll('.sc-shutter-label').forEach(function(shutterLabel) {
           shutterLabel.innerHTML = friendlyName;
       })
@@ -308,9 +326,10 @@ class ShutterCard extends HTMLElement {
         shutter.querySelectorAll('.sc-shutter-position').forEach(function (shutterPosition) {
           let visiblePosition;
           let positionText;
+		  
           if (invertPercentage) {
             visiblePosition = offset?Math.min(100, Math.round(currentPosition / offset * 100 )):currentPosition;
-            positionText = _this.positionPercentToText(visiblePosition, invertPercentage, alwaysPercentage, hass);
+            positionText = _this.positionPercentToText(visiblePosition, invertPercentage, alwaysPercentage, hass, text_opened, text_closed, text_no_position);
             if (disableEnd) {
               _this.changeButtonState(shutter, currentPosition, invertPercentage);
             }
@@ -320,7 +339,7 @@ class ShutterCard extends HTMLElement {
           }
           else  {
             visiblePosition = offset?Math.max(0, Math.round((currentPosition - offset) / (100-offset) * 100 )):currentPosition;
-            positionText = _this.positionPercentToText(visiblePosition, invertPercentage, alwaysPercentage, hass);
+            positionText = _this.positionPercentToText(visiblePosition, invertPercentage, alwaysPercentage, hass, text_opened, text_closed, text_no_position);
             if (disableEnd) {
               _this.changeButtonState(shutter, currentPosition, invertPercentage);
             }
@@ -368,16 +387,19 @@ class ShutterCard extends HTMLElement {
     }
   }
 
-  positionPercentToText(percent, inverted, alwaysPercentage, hass) {
+  positionPercentToText(percent, inverted, alwaysPercentage, hass, text_opened, text_closed, text_no_position) {
+	if( typeof(percent) == "undefined" && text_no_position != "") {return text_no_position;}
     if (!alwaysPercentage) {
       if (percent == 100) {
-        return hass.localize(inverted?'ui.components.logbook.messages.was_closed':'ui.components.logbook.messages.was_opened');
+	   if(text_opened != "") {return text_opened;}
+	   return hass.localize(inverted?'ui.components.logbook.messages.was_closed':'ui.components.logbook.messages.was_opened');
       }
       else if (percent == 0) {
-        return hass.localize(inverted?'ui.components.logbook.messages.was_opened':'ui.components.logbook.messages.was_closed');
+		if(text_closed != "") {return text_closed;}
+		return hass.localize(inverted?'ui.components.logbook.messages.was_opened':'ui.components.logbook.messages.was_closed');
       }
     }
-    return percent + ' %';
+	return percent + ' %';
   }
 
   calculatePositionFromPercent(percent, inverted, offset) {
