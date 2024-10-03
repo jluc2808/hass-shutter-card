@@ -77,11 +77,6 @@ class ShutterCard extends HTMLElement {
           text_no_position = entity.text_no_position;
         }
           
-		let stop_button = "true";
-        if (entity && entity.stop_button) {
-          stop_button = entity.stop_button;
-        }
-		
         let shutter = document.createElement('div');
 
         shutter.className = 'sc-shutter';
