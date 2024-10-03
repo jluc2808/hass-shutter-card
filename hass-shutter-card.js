@@ -86,6 +86,7 @@ class ShutterCard extends HTMLElement {
 
         shutter.className = 'sc-shutter';
         shutter.dataset.shutter = entityId;
+		if (buttonStop) {
         shutter.innerHTML = `
           <div class="sc-shutter-top" ` + (titlePosition == 'bottom' ? 'style="display:none;"' : '') + `>
             <div class="sc-shutter-label">
@@ -131,7 +132,55 @@ class ShutterCard extends HTMLElement {
             </div>
           </div>
         `;
-        
+        }
+		else {
+		
+		shutter.innerHTML = `
+          <div class="sc-shutter-top" ` + (titlePosition == 'bottom' ? 'style="display:none;"' : '') + `>
+            <div class="sc-shutter-label">
+            
+            </div>
+            <div class="sc-shutter-position">
+            
+            </div>
+          </div>
+          <div class="sc-shutter-middle" style="flex-flow: ` + (buttonsInRow ? 'column': 'row') + (buttonsContainerReversed ? '-reverse' : '') + ` nowrap;">
+            <div class="sc-shutter-buttons" style="flex-flow: ` + (buttonsInRow ? 'row': 'column') + ` wrap;">
+              `+(partial?`<ha-icon-button label="Partially close" class="sc-shutter-button sc-shutter-button-partial" data-command="partial" data-position="`+partial+`"><ha-icon icon="mdi:arrow-expand-vertical"></ha-icon></ha-icon-button>`:``)+`
+              ` + (tilt?`
+              <ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.open_tilt_cover`) +`" class="sc-shutter-button sc-shutter-button-tilt-open" data-command="tilt-open"><ha-icon icon="mdi:arrow-top-right"></ha-icon></ha-icon-button>
+              <ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.close_tilt_cover`) +`"class="sc-shutter-button sc-shutter-button-tilt-down" data-command="tilt-close"><ha-icon icon="mdi:arrow-bottom-left"></ha-icon></ha-icon-button>
+              `:``) + `
+            </div>
+            <div class="sc-shutter-buttons" style="flex-flow: ` + (buttonsInRow ? 'row': 'column') + ` wrap;">
+              <ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.open_cover`) +`" class="sc-shutter-button sc-shutter-button-up" data-command="up"><ha-icon icon="mdi:arrow-up"></ha-icon></ha-icon-button>
+              <ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.stop_cover`) +`"class="sc-shutter-button sc-shutter-button-stop" data-command="stop"><ha-icon icon="mdi:stop"></ha-icon></ha-icon-button>
+              <ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.close_cover`) +`" class="sc-shutter-button sc-shutter-button-down" data-command="down"><ha-icon icon="mdi:arrow-down"></ha-icon></ha-icon-button>
+            </div>
+            <div class="sc-shutter-selector">
+              <div class="sc-shutter-selector-picture" style="width: `+ width +`px">
+                <div class="sc-shutter-selector-slide"></div>
+                <div class="sc-shutter-selector-picker"></div>`+
+                (partial&&!offset?
+                  `<div class="sc-shutter-selector-partial" style="top:`+_this.calculatePositionFromPercent(partial, invertPercentage, offset)+`px"></div>`:``
+                ) + `
+                <div class="sc-shutter-movement-overlay">                
+                  <ha-icon class="sc-shutter-movement-open" icon="mdi:arrow-up"></ha-icon>
+                  <ha-icon class="sc-shutter-movement-close" icon="mdi:arrow-down"></ha-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sc-shutter-bottom" ` + (titlePosition != 'bottom' ? 'style="display:none;"' : '') + `>
+            <div class="sc-shutter-label">
+            
+            </div>
+            <div class="sc-shutter-position">
+            
+            </div>
+          </div>
+        `;
+		}
         let picture = shutter.querySelector('.sc-shutter-selector-picture');
         let slide = shutter.querySelector('.sc-shutter-selector-slide');
         let picker = shutter.querySelector('.sc-shutter-selector-picker');
