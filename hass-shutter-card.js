@@ -218,7 +218,7 @@ class ShutterCard extends HTMLElement {
                       break;
 
                   case 'stop':
-                      service = 'stop_cover';
+                      service = '';
                       break;
                   case 'partial':
                       service = 'set_cover_position';
