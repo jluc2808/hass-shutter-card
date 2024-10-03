@@ -37,9 +37,9 @@ class ShutterCard extends HTMLElement {
             titlePosition = entity.title_position.toLowerCase();
         }
 
-		let buttonStop = true;
+		let buttonStop = "enable";
         if (entity && entity.display_button_stop) {
-            buttonStop = entity.display_button_stop;
+            buttonStop = entity.display_button_stop.toLowerCase();
         }
 		
         let invertPercentage = false;
@@ -105,7 +105,7 @@ class ShutterCard extends HTMLElement {
             </div>
             <div class="sc-shutter-buttons" style="flex-flow: ` + (buttonsInRow ? 'row': 'column') + ` wrap;">
               <ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.open_cover`) +`" class="sc-shutter-button sc-shutter-button-up" data-command="up"><ha-icon icon="mdi:arrow-up"></ha-icon></ha-icon-button>
-              <ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.stop_cover`) +`"class="sc-shutter-button sc-shutter-button-stop" data-command="stop" ` + (buttonStop == false ? 'style="display:none;"' : '') +  `><ha-icon icon="mdi:stop"></ha-icon></ha-icon-button>
+              <ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.stop_cover`) +`"class="sc-shutter-button sc-shutter-button-stop" data-command="stop" ` + (buttonStop == 'disable' ? 'style="display:none;"' : '') +  `><ha-icon icon="mdi:stop"></ha-icon></ha-icon-button>
               <ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.close_cover`) +`" class="sc-shutter-button sc-shutter-button-down" data-command="down"><ha-icon icon="mdi:arrow-down"></ha-icon></ha-icon-button>
             </div>
             <div class="sc-shutter-selector">
@@ -310,10 +310,6 @@ class ShutterCard extends HTMLElement {
       if (entity && entity.disable_end_buttons) {
         disableEnd = entity.disable_end_buttons;
       }
-	  let buttonStop = true;
-        if (entity && entity.display_button_stop) {
-            buttonStop = entity.display_button_stop;
-      }
 
       const shutter = _this.card.querySelector('div[data-shutter="' + entityId +'"]');
       const slide = shutter.querySelector('.sc-shutter-selector-slide');
@@ -326,7 +322,7 @@ class ShutterCard extends HTMLElement {
       const text_opened = (entity && entity.text_opened) ? entity.text_opened : '';
 	  const text_closed = (entity && entity.text_closed) ? entity.text_closed : '';
 	  const text_no_position = (entity && entity.text_no_position) ? entity.text_no_position : '';
-	//  const display_button_stop = (entity && entity.display_button_stop) ? entity.dispay_button_stop : '';
+	  const display_button_stop = (entity && entity.display_button_stop) ? entity.dispay_button_stop : '';
 	  
       shutter.querySelectorAll('.sc-shutter-label').forEach(function(shutterLabel) {
           shutterLabel.innerHTML = friendlyName;
