@@ -104,7 +104,8 @@ class ShutterCard extends HTMLElement {
               `:``) + `
             </div>
             <div class="sc-shutter-buttons" style="flex-flow: ` + (buttonsInRow ? 'row': 'column') + ` wrap;">`
-		if (buttonStop) {shutter.innerHTML += {
+		if (buttonStop) {
+			shutter.innerHTML += 
               `<ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.open_cover`) +`" class="sc-shutter-button sc-shutter-button-up" data-command="up"><ha-icon icon="mdi:arrow-up"></ha-icon></ha-icon-button>`
 			}
 		shutter.innerHTML += `  
