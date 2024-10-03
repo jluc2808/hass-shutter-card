@@ -37,7 +37,7 @@ This card allows to open, close or set a shutter to the opening rate you want.
 | text_opened | string | False | - | Custom text for state opened
 | text_closed | string | False | - | Custom text for state closed
 | text_no_position | string | False | - | Custom text for no state
-| stop_button | string | False | `enable` | Set it to `disable` if you don't want to display the stop button
+| display_button_stop | string | False | `enable` | Set it to `disable` if you don't want to display the stop button
 _Remark : you can also just give the entity ID (without to specify `entity:`) if you don't need to specify the other configurations._
 
 ### Sample
