@@ -77,6 +77,11 @@ class ShutterCard extends HTMLElement {
           text_no_position = entity.text_no_position;
         }
           
+		let stop_button = true;
+        if (entity && entity.stop_button) {
+          stop_button = entity.stop_button;
+        }
+		
         let shutter = document.createElement('div');
 
         shutter.className = 'sc-shutter';
@@ -100,8 +105,8 @@ class ShutterCard extends HTMLElement {
             </div>
             <div class="sc-shutter-buttons" style="flex-flow: ` + (buttonsInRow ? 'row': 'column') + ` wrap;">
               <ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.open_cover`) +`" class="sc-shutter-button sc-shutter-button-up" data-command="up"><ha-icon icon="mdi:arrow-up"></ha-icon></ha-icon-button>
-            
-              <ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.close_cover`) +`" class="sc-shutter-button sc-shutter-button-down" data-command="down"><ha-icon icon="mdi:arrow-down"></ha-icon></ha-icon-button>
+              ` + if (stop_button) {`<ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.stop_cover`) +`"class="sc-shutter-button sc-shutter-button-stop" data-command="stop"><ha-icon icon="mdi:stop"></ha-icon></ha-icon-button>`}
+              `<ha-icon-button label="` + hass.localize(`ui.dialogs.more_info_control.cover.close_cover`) +`" class="sc-shutter-button sc-shutter-button-down" data-command="down"><ha-icon icon="mdi:arrow-down"></ha-icon></ha-icon-button>
             </div>
             <div class="sc-shutter-selector">
               <div class="sc-shutter-selector-picture" style="width: `+ width +`px">
