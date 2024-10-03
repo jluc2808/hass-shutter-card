@@ -37,6 +37,11 @@ class ShutterCard extends HTMLElement {
             titlePosition = entity.title_position.toLowerCase();
         }
 
+		let buttonStop = true;
+        if (entity && entity.display_button_stop) {
+            buttonStop = entity.display_button_stop;
+        }
+		
         let invertPercentage = false;
         if (entity && entity.invert_percentage) {
           invertPercentage = entity.invert_percentage;
