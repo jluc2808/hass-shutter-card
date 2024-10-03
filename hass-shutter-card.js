@@ -322,6 +322,7 @@ class ShutterCard extends HTMLElement {
       const text_opened = (entity && entity.text_opened) ? entity.text_opened : '';
 	  const text_closed = (entity && entity.text_closed) ? entity.text_closed : '';
 	  const text_no_position = (entity && entity.text_no_position) ? entity.text_no_position : '';
+	  const display_button_stop = (entity && entity.display_button_stop) ? entity.dispay_button_stop : '';
 	  
       shutter.querySelectorAll('.sc-shutter-label').forEach(function(shutterLabel) {
           shutterLabel.innerHTML = friendlyName;
