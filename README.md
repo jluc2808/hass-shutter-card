@@ -53,7 +53,7 @@ entities:
     text_opened: open
     text_closed: close
     text_no_position: no position 
-	display_button_stop: disable
+    display_button_stop: disable
   - cover.bedroom_shutter
 ```
 
